@@ -40,6 +40,34 @@ class Player:
         Returns:
             dict: coordinates of next position of your paddle.
         """
+      
+      if self.my_goal=='left':
+       
+       if current_state['puck_pos']['x'] < current_state['board_shape'][1]/2:
+        
+      
+        
+        if target_pos != self.my_paddle_pos:
+                direction_vector = {'x': target_pos['x'] - self.my_paddle_pos['x'],
+                                    'y': target_pos['y'] - self.my_paddle_pos['y']}
+                direction_vector = {k: v / utils.vector_l2norm(direction_vector)
+                                    for k, v in direction_vector.items()}
+
+                movement_dist = min(current_state['paddle_max_speed'] * current_state['delta_t'],
+                                    utils.distance_between_points(target_pos, self.my_paddle_pos))
+                direction_vector = {k: v * movement_dist
+                                    for k, v in direction_vector.items()}
+                new_paddle_pos = {'x': self.my_paddle_pos['x'] + direction_vector['x'],
+                                  'y': self.my_paddle_pos['y'] + direction_vector['y']}
+        
+        
+        movement_dist = min(current_state['paddle_max_speed'] * current_state['delta_t'],
+                                    utils.distance_between_points(target_pos, self.my_paddle_pos))
+        
+        
+      if self.my_goal=='right':
+       
+       
 
         # update my paddle pos
         # I need to do this because GameCore moves my paddle randomly
@@ -54,6 +82,13 @@ class Player:
                                'y': current_state['board_shape'][0]/2}
         self.opponent_goal_center = {'x': 0 if self.my_goal == 'right' else current_state['board_shape'][1],
                                      'y': current_state['board_shape'][0]/2}
+                       
+                       
+                       
+                       
+                       
+                       
+        
 
         # find if puck path is inside my interest area
         roi_radius = current_state['board_shape'][0] * current_state['goal_size'] * 2
