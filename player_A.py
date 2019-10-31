@@ -41,7 +41,7 @@ class Player:
         Returns:
             dict: coordinates of next position of your paddle.
         """
-
+        
         self.my_paddle_pos = current_state['paddle1_pos'] if self.my_goal == 'left' \
                                                               else current_state['paddle2_pos']
         path = estimate_path(current_state, self.future_size)
@@ -49,15 +49,42 @@ class Player:
                                'y': current_state['board_shape'][0]/2}
         self.opponent_goal_center = {'x': 0 if self.my_goal == 'right' else current_state['board_shape'][1],
                                      'y': current_state['board_shape'][0]/2}
-
-
+        
+        
+        
+        
+         """if self.my_goal== 'left':
+         if current_state['puck_pos']['x'] > current_state['board_shape'][1]/2:
+         
+          new_paddle_pos = {'x': self.my_paddle_pos['x'] - 5,
+                            'y': self.my_paddle_pos['y'] }
+          
+          if utils.is_inside_goal_area_paddle(new_paddle_pos, current_state) is False and \
+                     utils.is_out_of_boundaries_paddle(new_paddle_pos, current_state) is None:
+                    self.my_paddle_pos = new_paddle_pos
+            
+           return self.my_paddle_pos
+           
+           
+           
+           if self.my_goal== 'right':
+           if current_state['puck_pos']['x'] < current_state['board_shape'][1]/2:
+         
+          new_paddle_pos = {'x': self.my_paddle_pos['x'] + 5,
+                            'y': self.my_paddle_pos['y'] } 
+          """
+          
+          
+          
+          
         int_radio = current_state['board_shape'][0] * current_state['goal_size'] * 2
         int_area = None
         for p in path:
             if utils.distance_between_points(p[0], self.my_goal_center) < int_radio:
                 int_area = p
                 break
-
+        
+          
         if int_area:
             # estimate an aiming position
             target_pos = utils.aim(int_area[0], int_area[1],
