@@ -29,6 +29,8 @@ class Player:
         self.my_goal_center = {}
         self.opponent_goal_center = {}
         self.my_paddle_pos = paddle_pos
+        self.p_impacto={}
+        self.nuevo_objetivo={}
 
 
     def next_move(self, current_state):
@@ -66,7 +68,7 @@ class Player:
         if pt_in_roi:
             # estimate an aiming position
             target_pos = utils.aim(pt_in_roi[0], pt_in_roi[1],
-                                   self.opponent_goal_center, current_state['puck_radius'],
+                                   self.nuevo_objetivo, current_state['puck_radius'],
                                    current_state['paddle_radius'])
 
             # move to target position, taking into account the max. paddle speed
@@ -90,6 +92,27 @@ class Player:
                     self.my_paddle_pos = new_paddle_pos
 
         return self.my_paddle_pos
+       
+def angulo_golpe(self.opponent_goal_center,current_state['puck_radius'],current_state['paddle_radius'],current_state['puck_pos'])
+     """Function that estimates the point on the wall where we are sending the puck so it bounces and scores off of it"""
+      if current_state['board_shape'][0]/2  >  current_state['puck_pos']['y']:
+       opposite=-(current_state['puck_pos'])
+       p_impacto{['y']:current_state['puck_pos']['y']-opposite+current_state['puck_radius'],
+                 ['x']:(current_state['puck_pos']['x']+self.opponent_goal_center['x'])/2}
+         
+       
+     
+          
+    
+      if current_state['board_shape'][0]/2   <  current_state['puck_pos']:
+      opposite=2(current_state['puck_pos'])
+       p_impacto{['y']:opposite-current_state['puck_pos']['y']-current_state['puck_radius']
+                 ['x']:(current_state['puck pos']['x']+self.opponent_goal_center['x'])/2}
+       
+       
+     self.nuevo_objetivo = {['x']:p_impacto['x'],
+                            ['y']:p_impacto['y']}
+      
 
 
 def estimate_path(current_state, after_time):
