@@ -72,6 +72,12 @@ class Player:
          
           new_paddle_pos = {'x': self.my_paddle_pos['x'] + 5,
                             'y': self.my_paddle_pos['y'] } 
+                            
+           if utils.is_inside_goal_area_paddle(new_paddle_pos, current_state) is False and \
+                     utils.is_out_of_boundaries_paddle(new_paddle_pos, current_state) is None:
+                    self.my_paddle_pos = new_paddle_pos
+                            
+            return self.my_paddle_pos
           """
           
           
