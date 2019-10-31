@@ -42,31 +42,25 @@ class Player:
             dict: coordinates of next position of your paddle.
         """
 
-        # update my paddle pos
-        # I need to do this because GameCore moves my paddle randomly
         self.my_paddle_pos = current_state['paddle1_pos'] if self.my_goal == 'left' \
                                                               else current_state['paddle2_pos']
-
-        # estimate puck path
         path = estimate_path(current_state, self.future_size)
-
-        # computing both goal centers
         self.my_goal_center = {'x': 0 if self.my_goal == 'left' else current_state['board_shape'][1],
                                'y': current_state['board_shape'][0]/2}
         self.opponent_goal_center = {'x': 0 if self.my_goal == 'right' else current_state['board_shape'][1],
                                      'y': current_state['board_shape'][0]/2}
 
-        # find if puck path is inside my interest area
-        roi_radius = current_state['board_shape'][0] * current_state['goal_size'] * 2
-        pt_in_roi = None
+
+        int_radio = current_state['board_shape'][0] * current_state['goal_size'] * 2
+        int_area = None
         for p in path:
-            if utils.distance_between_points(p[0], self.my_goal_center) < roi_radius:
-                pt_in_roi = p
+            if utils.distance_between_points(p[0], self.my_goal_center) < int_radio:
+                int_area = p
                 break
 
-        if pt_in_roi:
+        if int_area:
             # estimate an aiming position
-            target_pos = utils.aim(pt_in_roi[0], pt_in_roi[1],
+            target_pos = utils.aim(int_area[0], int_area[1],
                                    self.opponent_goal_center, current_state['puck_radius'],
                                    current_state['paddle_radius'])
 
@@ -91,6 +85,8 @@ class Player:
                     self.my_paddle_pos = new_paddle_pos
 
         return self.my_paddle_pos
+        
+        #else...
 
 
 def estimate_path(current_state, after_time):
