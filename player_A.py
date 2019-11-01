@@ -92,12 +92,10 @@ class Player:
         
           
         if int_area:
-            # estimate an aiming position
             target_pos = utils.aim(int_area[0], int_area[1],
                                    self.opponent_goal_center, current_state['puck_radius'],
                                    current_state['paddle_radius'])
 
-            # move to target position, taking into account the max. paddle speed
             if target_pos != self.my_paddle_pos:
                 direction_vector = {'x': target_pos['x'] - self.my_paddle_pos['x'],
                                     'y': target_pos['y'] - self.my_paddle_pos['y']}
@@ -111,13 +109,10 @@ class Player:
                 new_paddle_pos = {'x': self.my_paddle_pos['x'] + direction_vector['x'],
                                   'y': self.my_paddle_pos['y'] + direction_vector['y']}
 
-                # check if computed new position in not inside goal area
-                # check if computed new position in inside board limits
                 if utils.is_inside_goal_area_paddle(new_paddle_pos, current_state) is False and \
                      utils.is_out_of_boundaries_paddle(new_paddle_pos, current_state) is None:
                     self.my_paddle_pos = new_paddle_pos
         else:
-
             target_pos = self.my_goal_center
             if target_pos != self.my_paddle_pos:
                 direction_vector = {'x': target_pos['x'] - self.my_paddle_pos['x'],
