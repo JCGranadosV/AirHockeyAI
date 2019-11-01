@@ -20,8 +20,7 @@ import utils
 class Player:
     def __init__(self, paddle_pos, goal_side):
 
-        # set your team's name, max. 15 chars
-        self.my_display_name = "DREAM TEAM"
+        self.my_display_name = "HClub"
 
         # these belong to my solution,
         # you may erase or change them in yours
