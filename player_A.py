@@ -91,40 +91,40 @@ class Player:
         
           
         if int_area:
-            target_pos = utils.aim(int_area[0], int_area[1],
+            target = utils.aim(int_area[0], int_area[1],
                                    self.opponent_goal_center, current_state['puck_radius'],
                                    current_state['paddle_radius'])
 
-            if target_pos != self.my_paddle_pos:
-                direction_vector = {'x': target_pos['x'] - self.my_paddle_pos['x'],
-                                    'y': target_pos['y'] - self.my_paddle_pos['y']}
-                direction_vector = {k: v / utils.vector_l2norm(direction_vector)
-                                    for k, v in direction_vector.items()}
+            if target != self.my_paddle_pos:
+                direction = {'x': target['x'] - self.my_paddle_pos['x'],
+                                    'y': target['y'] - self.my_paddle_pos['y']}
+                direction = {k: v / utils.vector_l2norm(direction)
+                                    for k, v in direction.items()}
 
-                movement_dist = min(current_state['paddle_max_speed'] * current_state['delta_t'],
-                                    utils.distance_between_points(target_pos, self.my_paddle_pos))
-                direction_vector = {k: v * movement_dist
-                                    for k, v in direction_vector.items()}
-                new_paddle_pos = {'x': self.my_paddle_pos['x'] + direction_vector['x'],
-                                  'y': self.my_paddle_pos['y'] + direction_vector['y']}
+                distance = min(current_state['paddle_max_speed'] * current_state['delta_t'],
+                                    utils.distance_between_points(target, self.my_paddle_pos))
+                direction = {k: v * distance
+                                    for k, v in direction.items()}
+                new_paddle_pos = {'x': self.my_paddle_pos['x'] + direction['x'],
+                                  'y': self.my_paddle_pos['y'] + direction['y']}
 
                 if utils.is_inside_goal_area_paddle(new_paddle_pos, current_state) is False and \
                      utils.is_out_of_boundaries_paddle(new_paddle_pos, current_state) is None:
                     self.my_paddle_pos = new_paddle_pos
         else:
-            target_pos = self.my_goal_center
-            if target_pos != self.my_paddle_pos:
-                direction_vector = {'x': target_pos['x'] - self.my_paddle_pos['x'],
-                                    'y': target_pos['y'] - self.my_paddle_pos['y']}
-                direction_vector = {k: v / utils.vector_l2norm(direction_vector)
-                                    for k, v in direction_vector.items()}
+            target = self.my_goal_center
+            if target != self.my_paddle_pos:
+                direction = {'x': target['x'] - self.my_paddle_pos['x'],
+                                    'y': target['y'] - self.my_paddle_pos['y']}
+                direction = {k: v / utils.vector_l2norm(direction)
+                                    for k, v in direction.items()}
 
-                movement_dist = min(current_state['paddle_max_speed'] * current_state['delta_t'],
-                                    utils.distance_between_points(target_pos, self.my_paddle_pos))
-                direction_vector = {k: v * movement_dist
-                                    for k, v in direction_vector.items()}
-                new_paddle_pos = {'x': self.my_paddle_pos['x'] + direction_vector['x'],
-                                  'y': self.my_paddle_pos['y'] + direction_vector['y']}
+                distance = min(current_state['paddle_max_speed'] * current_state['delta_t'],
+                                    utils.distance_between_points(target, self.my_paddle_pos))
+                direction = {k: v * distance
+                                    for k, v in direction.items()}
+                new_paddle_pos = {'x': self.my_paddle_pos['x'] + direction['x'],
+                                  'y': self.my_paddle_pos['y'] + direction['y']}
 
                 if utils.is_inside_goal_area_paddle(new_paddle_pos, current_state) is False and \
                      utils.is_out_of_boundaries_paddle(new_paddle_pos, current_state) is None:
